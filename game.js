@@ -14,8 +14,17 @@ function startGame(){
     game.font = elementsSize + "px Verdana";
     game.textAlign = "end";
 
+    let mapToRender = 0;
+    let map = maps[mapToRender].trim().split("\n");
+
+    map = map.map(rows => rows.trim().split(""));
+
+    console.log(map);
+
     for(let i = 1; i <= 10; i++){
-        game.fillText(emojis["X"], elementsSize * i, elementsSize);
+        for(let j = 1; j <= 10; j++){
+            game.fillText(emojis[map[i-1][j-1]], elementsSize * j, elementsSize * i);
+        }
     }
 }
 
