@@ -14,18 +14,17 @@ function startGame(){
     game.font = elementsSize + "px Verdana";
     game.textAlign = "end";
 
-    let mapToRender = 0;
-    let map = maps[mapToRender].trim().split("\n");
-
+    let level = 0;
+    let map = maps[level].trim().split("\n");
     map = map.map(rows => rows.trim().split(""));
 
-    console.log(map);
-
-    for(let i = 1; i <= 10; i++){
-        for(let j = 1; j <= 10; j++){
-            game.fillText(emojis[map[i-1][j-1]], elementsSize * j, elementsSize * i);
-        }
-    }
+    map.forEach((row, i) => {
+        row.forEach((col, j) => {
+            let posX = elementsSize * (j + 1);
+            let posY = elementsSize * (i + 1);
+            game.fillText(emojis[col], posX, posY);
+        });
+    });
 }
 
 function setCanvasSize(){ 
