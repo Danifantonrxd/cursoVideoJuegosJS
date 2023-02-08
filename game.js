@@ -8,6 +8,8 @@ const btnDown = document.querySelector("#down");
 
 let canvasSize;
 let elementsSize;
+let level = 0;
+let lives = 3;
 
 let playerPosition = {
     x: 0,
@@ -19,6 +21,8 @@ const giftPosition = {
     y: 0
 };
 
+let bombs = [];
+
 window.addEventListener("load", setCanvasSize); 
 window.addEventListener("resize", setCanvasSize);
 
@@ -29,10 +33,14 @@ function startGame(){
     game.font = elementsSize + "px Verdana";
     game.textAlign = "end";
 
-    let level = 1;
+    if(!maps[level]){
+        gameWin();
+        return;
+    }
     let map = maps[level].trim().split("\n");
     map = map.map(rows => rows.trim().split(""));
 
+    bombs = [];
     game.clearRect(0, 0, canvasSize, canvasSize)
     map.forEach((row, i) => {
         row.forEach((col, j) => {
@@ -47,6 +55,9 @@ function startGame(){
             else if(col == "I"){
                 giftPosition.x = posX;
                 giftPosition.y = posY;
+            }
+            else if(col == "X"){
+                bombs.push({x: posX, y: posY});
             }
         });
     });
@@ -69,13 +80,51 @@ function setCanvasSize(){
 function movePlayer(){
     game.fillText(emojis["PLAYER"], playerPosition.x, playerPosition.y); 
 
-    const colisionX = Math.round(giftPosition.x) == Math.round(playerPosition.x);
-    const colisionY = Math.round(giftPosition.y) == Math.round(playerPosition.y);
-    const colision = colisionX && colisionY;
+    const giftColisionX = Math.round(giftPosition.x) == Math.round(playerPosition.x);
+    const giftColisionY = Math.round(giftPosition.y) == Math.round(playerPosition.y);
+    const giftColision = giftColisionX && giftColisionY;
 
-    if(colision){
-        console.log("Ganaste");
+    let bombColisionX;
+    let bombColisionY;
+    let bombColision;
+
+    const dead = bombs.find(bomb => {
+        bombColisionX = Math.round(bomb.x) == Math.round(playerPosition.x);
+        bombColisionY = Math.round(bomb.y) == Math.round(playerPosition.y);
+        return bombColisionX && bombColisionY;        
+    }); 
+
+    if(dead){
+        levelFail();
     }
+
+    if(giftColision){
+        levelUp();
+    }
+}
+
+function levelUp(){
+    console.log("Ganaste");
+    level++;
+    startGame();
+}
+
+function gameWin(){
+    console.log("Terminaste el juego!");
+}
+
+function levelFail(){
+    console.log("Moriste");
+    playerPosition.x = 0;
+    playerPosition.y = 0;
+    lives--;
+
+    if(lives <= 0){
+        level = 0;
+        lives = 3;
+    }
+
+    startGame();
 }
 
 window.addEventListener("keydown", moveByKeys);
