@@ -7,7 +7,9 @@ const btnDown = document.querySelector("#down");
 const spanLives = document.querySelector(".lives");
 const spanTime = document.querySelector(".time");
 const spanRecord = document.querySelector(".record");
-
+const restartPanel = document.querySelector(".game-finish");
+const restartYes = document.querySelector("#rSi");
+const restartNo = document.querySelector("#rNo");
 
 let canvasSize;
 let elementsSize;
@@ -30,6 +32,9 @@ let bombs = [];
 
 window.addEventListener("load", setCanvasSize); 
 window.addEventListener("resize", setCanvasSize);
+
+restartYes.addEventListener("click", restart);
+restartNo.addEventListener("click", () => {restartPanel.classList.add("inactive")});
 
 function startGame(){
 
@@ -138,6 +143,12 @@ function gameWin(){
     else if(Number(localStorage["record"]) > timeWin){
         localStorage["record"] = timeWin;
     }
+    restartPanel.classList.remove("inactive");
+}
+
+function restart(){
+    restartPanel.classList.add("inactive");
+    location.reload();
 }
 
 function levelFail(){

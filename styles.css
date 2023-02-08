@@ -5,6 +5,10 @@ body {
     margin: 0;
     padding: 0;
   }
+
+  .inactive{
+    display: none;
+  }
   
   .game-container {
     display: flex;
@@ -54,6 +58,27 @@ body {
     display: block;
     margin: 0;
     width: 100%;
+  }
+
+  .game-finish{
+    width: 30%;
+    background-color: #612104;
+    position: absolute;
+    right: 30%;
+    text-align: center;
+    padding: 5%;
+    border: 3px solid #ff6600;
+    border-radius: 8px;
+  }
+
+  .game-finish p:nth-child(1){
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  .game-finish p:nth-child(2){
+    margin-bottom: 8px;
   }
   
   @media (max-width: 440px) {
