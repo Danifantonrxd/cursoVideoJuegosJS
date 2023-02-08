@@ -132,7 +132,10 @@ function gameWin(){
     console.log("Terminaste el juego!");
     clearInterval(interval);
     let timeWin = Date.now() - timeStart;
-    if(Number(localStorage["record"]) > timeWin){
+    if(!localStorage["record"]){
+        localStorage["record"] = timeWin;
+    }
+    else if(Number(localStorage["record"]) > timeWin){
         localStorage["record"] = timeWin;
     }
 }
