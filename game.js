@@ -90,6 +90,9 @@ function setCanvasSize(){
     canvas.setAttribute("width", canvasSize);
     canvas.setAttribute("height", canvasSize);
 
+    playerPosition.x = 0;
+    playerPosition.y = 0;
+
     startGame();
 }
 
@@ -164,29 +167,33 @@ btnLeft.addEventListener("click", moveLeft);
 btnRight.addEventListener("click", moveRight);
 btnDown.addEventListener("click", moveDown);
 
+function fixNumber(n){
+    return Number(n.toFixed(2));
+}
+
 function moveUp(){
-    if(!(playerPosition.y - elementsSize < elementsSize)){
+    if(!(fixNumber(playerPosition.y - elementsSize) < fixNumber(elementsSize))){
         playerPosition.y -= elementsSize;
         startGame();
     }
 }
 
 function moveLeft(){
-    if(!(playerPosition.x - elementsSize < elementsSize)){
+    if(!(fixNumber(playerPosition.x - elementsSize) < fixNumber(elementsSize))){
         playerPosition.x -= elementsSize;
         startGame();
     }
 }
 
 function moveRight(){
-    if(!(playerPosition.x + elementsSize > canvasSize)){
+    if(!(fixNumber(playerPosition.x + elementsSize) > fixNumber(canvasSize))){
         playerPosition.x += elementsSize;
         startGame();
     }
 }
 
 function moveDown(){
-    if(!(playerPosition.y + elementsSize > canvasSize)){
+    if(!(fixNumber(playerPosition.y + elementsSize) > fixNumber(canvasSize))){
         playerPosition.y += elementsSize;
         startGame();
     }
